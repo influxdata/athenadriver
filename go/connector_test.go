@@ -77,7 +77,9 @@ func TestSQLConnector_Connect_NewSessionFail(t *testing.T) {
 	testConf := NewNoOpsConfig()
 	_ = testConf.SetRegion("ap-southeast-1")
 	os.Setenv("AWS_SDK_LOAD_CONFIG", "1")
-	os.Setenv("AWS_STS_REGIONAL_ENDPOINTS", "123")
+	// In v2 SDK, config.LoadDefaultConfig is more tolerant of invalid env vars.
+	// Use a non-existent profile to trigger an error.
+	testConf.SetAWSProfile("non-existent-profile-for-test")
 	connector := &SQLConnector{
 		config: testConf,
 		tracer: NewDefaultObservability(testConf),
@@ -85,7 +87,6 @@ func TestSQLConnector_Connect_NewSessionFail(t *testing.T) {
 	conn, err := connector.Connect(context.Background())
 
 	os.Unsetenv("AWS_SDK_LOAD_CONFIG")
-	os.Unsetenv("AWS_STS_REGIONAL_ENDPOINTS")
 	assert.NotNil(t, err)
 	assert.Nil(t, conn)
 }
@@ -118,9 +119,9 @@ func TestSQLConnector_Connect_NewSession_AWS_SDK_LOAD_CONFIG_true_AWSProfile_Set
 	conn, err := connector.Connect(context.Background())
 
 	os.Unsetenv("AWS_SDK_LOAD_CONFIG")
-	os.Unsetenv("AWS_STS_REGIONAL_ENDPOINTS")
-	assert.Nil(t, err)
-	assert.NotNil(t, conn)
+	// In v2 SDK, config.LoadDefaultConfig fails immediately when a non-existent profile is specified
+	assert.NotNil(t, err)
+	assert.Nil(t, conn)
 }
 
 func TestSQLConnector_Connect_NewSession_AWS_SDK_LOAD_CONFIG_false(t *testing.T) {
