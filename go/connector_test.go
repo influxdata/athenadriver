@@ -26,6 +26,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/stretchr/testify/assert"
 	"github.com/uber-go/tally/v4"
 	"go.uber.org/zap"
@@ -154,6 +156,43 @@ func TestSQLConnector_Connect_NewSession_Credentials(t *testing.T) {
 
 	assert.Nil(t, err)
 	assert.NotNil(t, conn)
+}
+
+func TestNewConnector_WithLoadOptions(t *testing.T) {
+	testConf := NewNoOpsConfig()
+	_ = testConf.SetRegion("us-east-1")
+
+	// Provide a LoadOption that sets static credentials. Verify it takes
+	// effect by supplying a second option that forces a non-existent
+	// shared config profile — which will cause LoadDefaultConfig to fail.
+	// If LoadOptions were ignored the profile option would never be seen
+	// and Connect would succeed.
+	connector := NewConnector(testConf)
+	connector.LoadOptions = []func(*config.LoadOptions) error{
+		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(
+			"AKID", "SECRET", "TOKEN",
+		)),
+		config.WithSharedConfigProfile("profile-that-does-not-exist"),
+	}
+
+	conn, err := connector.Connect(context.Background())
+	assert.NotNil(t, err, "expected error from non-existent profile set via LoadOptions")
+	assert.Nil(t, conn)
+
+	// Now show success: a valid LoadOption (static creds + region) should
+	// allow Connect to succeed without any Config credentials.
+	connectorOK := NewConnector(NewNoOpsConfig())
+	connectorOK.LoadOptions = []func(*config.LoadOptions) error{
+		config.WithRegion("us-west-2"),
+		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(
+			"AKID", "SECRET", "TOKEN",
+		)),
+	}
+
+	conn, err = connectorOK.Connect(context.Background())
+	assert.Nil(t, err)
+	assert.NotNil(t, conn)
+	assert.Nil(t, conn.Close())
 }
 
 func TestSQLConnector_Driver(t *testing.T) {

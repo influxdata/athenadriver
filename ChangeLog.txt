@@ -1,3 +1,8 @@
+v2.0.0 - InfluxData fork (March 20, 2026)
+  - Rename module to github.com/influxdata/athenadriver/v2
+  - Update AWS SDK to github.com/aws/aws-sdk-go/v2
+  - Add configurable options to Connector
+
 v1.1.15 - Merge community contribution (March 03, 2024)
   - Rename S3 bucket in test code (@jonathanbaker7 Jonathan Baker, @henrywoo)
   - Make poll interval configurable (@keshav-dataco Keshav Murthy)

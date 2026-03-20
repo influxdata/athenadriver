@@ -40,6 +40,9 @@ import (
 type SQLConnector struct {
 	config *Config
 	tracer *DriverTracer
+
+	// LoadOptions to apply to AWS Athena connections.
+	LoadOptions []func(*config.LoadOptions) error
 }
 
 // NoopsSQLConnector is to create a noops SQLConnector.
@@ -48,6 +51,13 @@ func NoopsSQLConnector() *SQLConnector {
 	return &SQLConnector{
 		config: noopsConfig,
 		tracer: NewDefaultObservability(noopsConfig),
+	}
+}
+
+// NewConnector creates a new Connector using the provided Config.
+func NewConnector(config *Config) *SQLConnector {
+	return &SQLConnector{
+		config: config,
 	}
 }
 
@@ -72,7 +82,7 @@ func (c *SQLConnector) Connect(ctx context.Context) (driver.Conn, error) {
 		c.tracer.SetLogger(logger)
 	}
 
-	var opts []func(*config.LoadOptions) error
+	opts := c.LoadOptions
 	// respect AWS_SDK_LOAD_CONFIG and local ~/.aws/credentials, ~/.aws/config
 	if ok, _ := strconv.ParseBool(os.Getenv("AWS_SDK_LOAD_CONFIG")); ok {
 		if profile := c.config.GetAWSProfile(); profile != "" {
