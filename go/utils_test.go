@@ -425,7 +425,7 @@ func TestUilts_GetTableNamesInQuery(t *testing.T) {
 
 func TestUilts_GetTidySQL(t *testing.T) {
 	// TODO: syntax error for catalog.sampledb.abc from sqlparser
-	// Fix https://github.com/uber/athenadriver/issues/5 when getting a chance
+	// Fix https://github.com/influxdata/athenadriver/v2/issues/5 when getting a chance
 	assert.Equal(t, GetTidySQL(" SELECT * from catalog.sampledb.abc "), "SELECT * from catalog.sampledb.abc")
 	assert.Equal(t, GetTidySQL(""), "")
 	assert.Equal(t, GetTidySQL("DESC abc"), "DESC abc")

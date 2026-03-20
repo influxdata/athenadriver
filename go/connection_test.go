@@ -335,7 +335,7 @@ func TestBuildExecutionParams(t *testing.T) {
 			name:        "No arguments",
 			inputArgs:   []driver.Value{},
 			expectedErr: nil,
-			expected:    []*string{},
+			expected:    nil,
 		},
 		{
 			name:        "Bool",
@@ -721,6 +721,7 @@ func createConnectionFixture() *Connection {
 	testConf.SetUser("henry.wu")
 	testConf.SetDB(randString(8)) // default
 	testConf.SetWGRemoteCreationAllowed(true)
+	nm.GetWGStatus = true
 	nm.CreateWGStatus = true
 
 	_ = testConf.SetWorkGroup(wg)

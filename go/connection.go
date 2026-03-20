@@ -310,7 +310,7 @@ func (c *Connection) QueryContext(ctx context.Context, query string, namedArgs [
 		} else if pseudoCommand = PCGetDriverVersion; strings.HasPrefix(query, pseudoCommand) {
 			return c.getHeaderlessSingleRowResultPage(ctx, DriverVersion)
 		} else {
-			return nil, fmt.Errorf("pseudo command " + query + "doesn't exist")
+			return nil, fmt.Errorf("pseudo command %s doesn't exist", query)
 		}
 	}
 	if c.connector.config.IsReadOnly() {

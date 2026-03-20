@@ -25,7 +25,7 @@ import (
 	"database/sql"
 	"log"
 
-	drv "github.com/uber/athenadriver/go"
+	drv "github.com/influxdata/athenadriver/v2/go"
 )
 
 var (

@@ -287,7 +287,7 @@ func (r *Rows) athenaTypeToGoType(columnInfo *athena.ColumnInfo, rawValue *strin
 		}
 		r.tracer.Scope().Counter(DriverName + ".failure.convertvalue.config").Inc(1)
 		r.tracer.Log(ErrorLevel, "missing data", zap.String("columnInfo.Name", *columnInfo.Name))
-		return nil, fmt.Errorf("Missing data at column " + *columnInfo.Name)
+		return nil, fmt.Errorf("Missing data at column %s", *columnInfo.Name)
 	}
 	val := *rawValue
 	// https://stackoverflow.com/questions/30299649/parse-string-to-specific-type-of-int-int8-int16-int32-int64

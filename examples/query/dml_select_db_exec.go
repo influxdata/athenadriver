@@ -23,8 +23,8 @@ package main
 import (
 	"database/sql"
 
-	secret "github.com/uber/athenadriver/examples/constants"
-	drv "github.com/uber/athenadriver/go"
+	secret "github.com/influxdata/athenadriver/v2/examples/constants"
+	drv "github.com/influxdata/athenadriver/v2/go"
 )
 
 func main() {

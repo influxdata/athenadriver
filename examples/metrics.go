@@ -27,12 +27,12 @@ import (
 	"log"
 	"time"
 
-	"github.com/cactus/go-statsd-client/statsd"
+	"github.com/cactus/go-statsd-client/v5/statsd"
 	tallystatsd "github.com/uber-go/tally/v4/statsd"
 
+	secret "github.com/influxdata/athenadriver/v2/examples/constants"
+	drv "github.com/influxdata/athenadriver/v2/go"
 	"github.com/uber-go/tally/v4"
-	secret "github.com/uber/athenadriver/examples/constants"
-	drv "github.com/uber/athenadriver/go"
 )
 
 func newScope() (tally.Scope, io.Closer) {

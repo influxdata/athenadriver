@@ -24,8 +24,8 @@ import (
 	"database/sql"
 	"os"
 
-	secret "github.com/uber/athenadriver/examples/constants"
-	drv "github.com/uber/athenadriver/go"
+	secret "github.com/influxdata/athenadriver/v2/examples/constants"
+	drv "github.com/influxdata/athenadriver/v2/go"
 )
 
 // To use athenadriver's Config for authentication
@@ -48,7 +48,7 @@ func useAthenaDriverConfigForAuth() {
 // - use AWS CLI's Config for authentication
 // - use in AWS Lambda where access ID and key are not required
 // - assume role where access ID and key are not required
-// Ref: https://github.com/uber/athenadriver/pull/10
+// Ref: https://github.com/influxdata/athenadriver/v2/pull/10
 func useAWSCLIConfigForAuth() {
 	os.Setenv("AWS_SDK_LOAD_CONFIG", "1")
 	// 1. Set AWS Credential in Driver Config.

@@ -30,8 +30,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	secret "github.com/uber/athenadriver/examples/constants"
-	drv "github.com/uber/athenadriver/go"
+	secret "github.com/influxdata/athenadriver/v2/examples/constants"
+	drv "github.com/influxdata/athenadriver/v2/go"
 	"go.uber.org/config"
 	"go.uber.org/fx"
 )
@@ -151,7 +151,7 @@ func new(p Params) (Result, error) {
 				os.Exit(1)
 			}
 		}
-		path := goPath + "/src/github.com/uber/athenadriver/athenareader/athenareader.config"
+		path := goPath + "/src/github.com/influxdata/athenadriver/v2/athenareader/athenareader.config"
 		if _, err = os.Stat(path); err == nil {
 			copyFile(path, homeDir()+"/athenareader.config")
 			provider, err = config.NewYAML(config.File(path))

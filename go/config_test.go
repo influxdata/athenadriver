@@ -216,7 +216,8 @@ func TestConfig_GetWorkgroup(t *testing.T) {
 	err := testConf.SetWorkGroup(wg)
 	assert.Nil(t, err)
 	w := testConf.GetWorkgroup()
-	assert.Nil(t, w.Tags)
+	assert.NotNil(t, w.Tags)
+	assert.Equal(t, 0, len(w.Tags.Get()))
 }
 
 func TestConfig_SetReadOnly(t *testing.T) {

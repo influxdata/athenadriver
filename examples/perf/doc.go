@@ -47,17 +47,17 @@
 //
 // Before Go 1.17, go get can be used to install athenadriver:
 //
-//   go get -u github.com/uber/athenadriver
+//   go get -u github.com/influxdata/athenadriver/v2
 // 
 // Starting in Go 1.17, installing executables with go get is deprecated. go install may be used instead.
 //
-//   go install github.com/uber/athenadriver@latest
+//   go install github.com/influxdata/athenadriver/v2@latest
 //
 // 3. Integration Test.
 //
 // To Build it:
 //
-//	$cd $GOPATH/src/github.com/uber/athenadriver
+//	$cd $GOPATH/src/github.com/influxdata/athenadriver/v2
 //	$go build examples/perf/concurrency.go
 //
 // Run it and wait for some output and unplug your cable:
