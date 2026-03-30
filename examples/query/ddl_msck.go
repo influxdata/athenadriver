@@ -34,9 +34,9 @@ import (
 	"database/sql"
 	"log"
 
-	secret "github.com/uber/athenadriver/examples/constants"
+	secret "github.com/influxdata/athenadriver/v2/examples/constants"
 
-	drv "github.com/uber/athenadriver/go"
+	drv "github.com/influxdata/athenadriver/v2/go"
 )
 
 func main() {

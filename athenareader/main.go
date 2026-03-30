@@ -24,9 +24,9 @@ import (
 	"context"
 	"strings"
 
-	drv "github.com/uber/athenadriver/go"
-	"github.com/uber/athenadriver/lib/configfx"
-	"github.com/uber/athenadriver/lib/queryfx"
+	drv "github.com/influxdata/athenadriver/v2/go"
+	"github.com/influxdata/athenadriver/v2/lib/configfx"
+	"github.com/influxdata/athenadriver/v2/lib/queryfx"
 	"go.uber.org/fx"
 )
 

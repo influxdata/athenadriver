@@ -24,10 +24,10 @@ import (
 	"database/sql"
 	"log"
 
-	secret "github.com/uber/athenadriver/examples/constants"
+	secret "github.com/influxdata/athenadriver/v2/examples/constants"
 	"go.uber.org/zap"
 
-	drv "github.com/uber/athenadriver/go"
+	drv "github.com/influxdata/athenadriver/v2/go"
 )
 
 func main() {

@@ -21,11 +21,14 @@
 package athenadriver
 
 import (
+	"fmt"
 	"net/url"
 	"regexp"
 	"strings"
 	"strconv"
 	"time"
+
+	"github.com/aws/aws-sdk-go-v2/service/athena/types"
 )
 
 // Config is for AWS Athena Driver Config.
@@ -227,8 +230,28 @@ func (c *Config) SetWorkGroup(w *Workgroup) error {
 	if w.Config == nil {
 		w.Config = GetDefaultWGConfig()
 	}
-	c.values.Set("workgroupConfig", w.Config.String())
+	c.values.Set("workgroupConfig", formatWGConfig(w.Config))
 	return nil
+}
+
+func formatWGConfig(cfg *types.WorkGroupConfiguration) string {
+	if cfg == nil {
+		return ""
+	}
+	var parts []string
+	if cfg.BytesScannedCutoffPerQuery != nil {
+		parts = append(parts, fmt.Sprintf("BytesScannedCutoffPerQuery: %d", *cfg.BytesScannedCutoffPerQuery))
+	}
+	if cfg.EnforceWorkGroupConfiguration != nil {
+		parts = append(parts, fmt.Sprintf("EnforceWorkGroupConfiguration: %t", *cfg.EnforceWorkGroupConfiguration))
+	}
+	if cfg.PublishCloudWatchMetricsEnabled != nil {
+		parts = append(parts, fmt.Sprintf("PublishCloudWatchMetricsEnabled: %t", *cfg.PublishCloudWatchMetricsEnabled))
+	}
+	if cfg.RequesterPaysEnabled != nil {
+		parts = append(parts, fmt.Sprintf("RequesterPaysEnabled: %t", *cfg.RequesterPaysEnabled))
+	}
+	return "{\n  " + strings.Join(parts, ",\n  ") + "\n}"
 }
 
 // SetAccessID is a setter of AWS Access ID.

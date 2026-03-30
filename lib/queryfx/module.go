@@ -23,8 +23,8 @@ package queryfx
 import (
 	"database/sql"
 
-	drv "github.com/uber/athenadriver/go"
-	"github.com/uber/athenadriver/lib/configfx"
+	drv "github.com/influxdata/athenadriver/v2/go"
+	"github.com/influxdata/athenadriver/v2/lib/configfx"
 	"go.uber.org/fx"
 )
 
